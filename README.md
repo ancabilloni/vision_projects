@@ -1,4 +1,4 @@
-# Collection of CV Applications / Tools
+# CV Applications / Tools
 
 Requirements: 
 - Python (written on 2.7, may work on 3)
