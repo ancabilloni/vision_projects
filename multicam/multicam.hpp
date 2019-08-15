@@ -24,7 +24,7 @@ class MultiCamStreamer
 {
 public:
     ~MultiCamStreamer(); // Destructor
-    MultiCamStreamer(vector<int> index); // Constructor
+    MultiCamStreamer(vector<int> index, bool display); // Constructor
     void camSetup();
     void acquire(int index);
     void close();
@@ -32,6 +32,7 @@ public:
     
 private:
     int camera_count;
+    bool show_cam;
     vector<int> camera_index;
     vector<VideoCapture*> camera_capture;
     vector<queue<Mat>*> frame_queue;

@@ -1,8 +1,8 @@
 #include "multicam.hpp"
 
 
-MultiCamStreamer::MultiCamStreamer(vector<int> index):
-    camera_index(index)
+MultiCamStreamer::MultiCamStreamer(vector<int> index, bool display):
+    camera_index(index), show_cam(display)
 {
     camera_count = index.size();
     camSetup();
@@ -44,27 +44,32 @@ void MultiCamStreamer::acquire(int index)
 // Acquiring images for each cam 
 {
     VideoCapture *capture = camera_capture[index];
+
     if(capture->isOpened())
     {
-        // namedWindow("cam" + to_string(index));
         while (capture->isOpened())
         {
-            // Mat frame;
             if(index == 0)
             {
                 (*capture) >> frame1;
-                mu_lock.lock();
-                imshow("cam0", frame1);
-                mu_lock.unlock();
+                if (show_cam)
+                {
+                    mu_lock.lock();
+                    imshow("cam0", frame1);
+                    mu_lock.unlock();
+                }
             } else 
             {
                 (*capture) >> frame2;
-                mu_lock.lock();
-                imshow("cam1", frame2);
-                mu_lock.unlock();
+                if (show_cam)
+                {
+                    mu_lock.lock();
+                    imshow("cam1", frame2);
+                    mu_lock.unlock();
+                }
             }
 
-            if (waitKey(5) == 27) break;
+            if (waitKey(1) == 27) break;
             
         }
         
@@ -92,10 +97,24 @@ void MultiCamStreamer::close()
     }
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    bool display = false;
+    if (argc < 2)
+    {
+        cout << "[INFO]: Execute './multicam display' to display camera streaming." << endl;
+    } else
+    {
+        std::string action(argv[1]);
+        if (action == "display")
+        {
+            display = true;
+            cout << "Set to display camera streaming." << endl;
+        }
+    }
+    
     vector<int> capture_index = {0, 2};
-    MultiCamStreamer cam(capture_index);
+    MultiCamStreamer cam(capture_index, display);
     cam.join_threads();
     return 0;
 }
