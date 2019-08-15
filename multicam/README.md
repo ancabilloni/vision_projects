@@ -1,7 +1,7 @@
-## Reading & display two webcam concurrently with Boost Thread C++
+## Reading & display two usb webcam concurrently with Boost Thread (C++)
 
 #### Tested on Ubuntu 18.04
-The program detects up to 2 cameras in the system. Here I tested with a built-in laptop camera, and an externel usb webcam.
+The program detects up to 2 cameras in the system. Here I tested with a built-in laptop camera, and an external usb webcam.
 
 #### Require:
 - g++
