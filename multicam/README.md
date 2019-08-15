@@ -19,3 +19,7 @@ To locate path to Boost file: `locate boost | grep libboost_system`
 
 #### TO-DO:
 - Create Makefile
+
+
+#### Credits:
+I learned alot from: https://putuyuwono.wordpress.com/2015/05/29/multi-thread-multi-camera-capture-using-opencv/
