@@ -3,25 +3,26 @@
 
 MultiCamStreamer::MultiCamStreamer(vector<int> index, bool display):
     camera_index(index), show_cam(display)
+/* Constructor */
 {
     camera_count = index.size();
     camSetup();
 };
 
 MultiCamStreamer::~MultiCamStreamer()
-// Clean up before exits
+/* Clean up before exits */
 {
     close();
 };
 
 void MultiCamStreamer::join_threads()
-// Keep threads ALIVE
+/* Keep threads ALIVE */
 {
     threads.join_all();
 }
 
 void MultiCamStreamer::camSetup()
-// Set cup camera and call threads
+/* Set cup camera and call threads */
 {
     for (int i=0; i < camera_count; i++)
     {
@@ -41,7 +42,7 @@ void MultiCamStreamer::camSetup()
 }
 
 void MultiCamStreamer::acquire(int index)
-// Acquiring images for each cam 
+/* Acquiring images for each cam  */
 {
     VideoCapture *capture = camera_capture[index];
 
@@ -83,7 +84,7 @@ void MultiCamStreamer::acquire(int index)
 }
 
 void MultiCamStreamer::close()
-// Close all cams when program exits
+/* Close all cams when program exits */
 {
     VideoCapture *cap;
     for (int i = 0; i < camera_count; i++)
@@ -113,7 +114,7 @@ int main(int argc, char** argv)
         }
     }
     
-    vector<int> capture_index = {0, 2};
+    vector<int> capture_index = {0, 2}; // Webcam index inside PC
     MultiCamStreamer cam(capture_index, display);
     cam.join_threads();
     return 0;
